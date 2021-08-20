@@ -26,4 +26,25 @@ describe("formLogin", () => {
     fireEvent.click(screen.getByTestId("form_login").firstChild);
     expect(onSubmit).toHaveBeenCalledTimes(0);
   });
+
+  it("should send form when every fields are writes", () => {
+    render(<App />);
+    const onSubmit = jest.fn();
+    const formLogin = screen.getByTestId("form_login").firstChild;
+
+    const firstName = screen.getByLabelText("firstName").nextElementSibling;
+    const lastName = screen.getByLabelText("lastName").nextElementSibling;
+    const email = screen.getByLabelText("email").nextElementSibling;
+    const password = screen.getByLabelText("password").nextElementSibling;
+
+    fireEvent.change(firstName, { target: { value: "Yoram" } });
+    fireEvent.change(lastName, { target: { value: "Taieb" } });
+    fireEvent.change(email, { target: { value: "yoram@gmail.com" } });
+    fireEvent.change(password, { target: { value: "Azerty15" } });
+
+    fireEvent.click(screen.getByTestId("form_login").firstChild);
+
+    // eslint-disable-next-line no-unused-expressions
+    expect(onSubmit).toHaveBeenCalled;
+  });
 });
